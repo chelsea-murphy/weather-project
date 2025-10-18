@@ -15,7 +15,6 @@ def format_temperature(temp):
     """
     return f"{temp}{DEGREE_SYMBOL}"
 
-
 def convert_date(iso_string):
     """Converts and ISO formatted date into a human-readable format.
 
@@ -35,7 +34,10 @@ def convert_f_to_c(temp_in_fahrenheit):
     Returns:
         A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
     """
-    pass
+    celsius = (float(temp_in_fahrenheit) - 32) * 5 / 9
+    return round(celsius,1)
+#example = "77"
+#convert_f_to_c(example)
 
 
 def calculate_mean(weather_data):
@@ -46,7 +48,16 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    pass
+    # get sum 
+    total = 0
+    for each_number in weather_data:
+        #print(each_number)
+        total=total + float(each_number)
+    # get mean
+    mean = total/len(weather_data)
+    return mean
+#weather_data = ["51", "58", "59", "52", "52", "48", "47", "53"]
+#print(f"The mean is {calculate_mean(weather_data)}")
 
 
 def load_data_from_csv(csv_file):
@@ -68,7 +79,22 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    #find min in list
+    min = float(weather_data [0])
+    min_position = 0
+    for i, number in enumerate(weather_data):
+        number = float(number)
+        #print (f"position{i} value{number}")
+        if (number <= min):
+            min = number
+            min_position = i
+    return (min,min_position)
+        #print(min)
+    #return (min,)
+
+#my_list = ["49", "57", "56", "55", "53", "49"]
+#print (find_min(my_list))
+#print(f"The index of the last occurrence of the minimum value ({min(my_list)}) is: {last_min_index}")
 
 
 def find_max(weather_data):
@@ -79,7 +105,20 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    max = float(weather_data [0])
+    max_position = 0
+    for i, number in enumerate(weather_data):
+        number = float(number)
+        #print (f"position{i} value{number}")
+        if (number >= max):
+            max = number
+            max_position = i
+    return (max,max_position)
+        #print(min)
+    #return (min,)
+
+my_list = ["49", "57", "56", "55", "57", "49"]
+print (find_max(my_list))
 
 
 def generate_summary(weather_data):
