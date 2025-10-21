@@ -23,7 +23,8 @@ def convert_date(iso_string):
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-    pass
+    date=datetime.fromisoformat(iso_string) 
+    return date.strftime("%A %d %B %Y")
 
 
 def convert_f_to_c(temp_in_fahrenheit):
@@ -68,8 +69,23 @@ def load_data_from_csv(csv_file):
     Returns:
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
-    pass
-
+    weather_data = []
+    with open(csv_file) as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            #if len (row) == 0 : 
+            # continue
+            #if not row: 
+            #   continue
+            if row: 
+                row[1] = int(row[1])
+                row[2] = int(row[2])
+                weather_data.append (row)
+        return weather_data
+            #print (row)
+result = load_data_from_csv("tests/data/example_two.csv")
+#print(result)
 
 def find_min(weather_data):
     """Calculates the minimum value in a list of numbers.
@@ -80,6 +96,7 @@ def find_min(weather_data):
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
     #find min in list
+    #assume first value is minimum
     min = float(weather_data [0])
     min_position = 0
     for i, number in enumerate(weather_data):
@@ -117,8 +134,8 @@ def find_max(weather_data):
         #print(min)
     #return (min,)
 
-my_list = ["49", "57", "56", "55", "57", "49"]
-print (find_max(my_list))
+#my_list = ["49", "57", "56", "55", "57", "49"]
+#print (find_max(my_list))
 
 
 def generate_summary(weather_data):
@@ -129,7 +146,14 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    min = float(weather_data [0])
+    min_position = 0
+    for i, number in enumerate(weather_data):
+        number = float(number)
+        if (number <= min):
+            min = number
+            min_position = i
+    return (min,min_position)
 
 
 def generate_daily_summary(weather_data):
