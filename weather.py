@@ -146,15 +146,41 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    min = float(weather_data [0])
-    min_position = 0
-    for i, number in enumerate(weather_data):
-        number = float(number)
-        if (number <= min):
-            min = number
-            min_position = i
-    return (min,min_position)
+    # min = float(weather_data [0])
+    # min_position = 0
+    # for i, number in enumerate(weather_data):
+    #     number = float(number)
+    #     if (number <= min):
+    #         min = number
+    #         min_position = i
+    # return (min,min_position)
+#find the number of days (x day overview)
+    summary = f"{len(weather_data)} Day Overview\n"
+#find the min and max temps
+    min_temps = [day[1] for day in weather_data]
+    max_temps = [day[2] for day in weather_data]
+#find the lowest and highest temps
+    lowest_temp, lowest_index = find_min(min_temps)
+    highest_temp, highest_index = find_max(max_temps)
+#find the dates for the lowest and highest temps
+    lowest_date = convert_date(weather_data[lowest_index][0])
+    highest_date = convert_date(weather_data[highest_index][0])
+#calculate mean temps
+    mean_low = calculate_mean(min_temps)
+    mean_high = calculate_mean(max_temps)
+#convert f_to_c
+    lowest_temp_c = convert_f_to_c(lowest_temp)
+    highest_temp_c = convert_f_to_c(highest_temp)
+    mean_low_c = convert_f_to_c(mean_low)
+    mean_high_c = convert_f_to_c(mean_high)
+#build the summary
+    summary = f"{len(weather_data)} Day Overview\n"
+    summary += f"  The lowest temperature will be {format_temperature(lowest_temp_c)}, and will occur on {lowest_date}.\n"
+    summary += f"  The highest temperature will be {format_temperature(highest_temp_c)}, and will occur on {highest_date}.\n"
+    summary += f"  The average low this week is {format_temperature(mean_low_c)}.\n"
+    summary += f"  The average high this week is {format_temperature(mean_high_c)}.\n"
 
+    return summary
 
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
@@ -164,4 +190,29 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    #find the min and max temps
+    #min_temps = [day[1] for day in weather_data]
+    #max_temps = [day[1] for day in weather_data]
+    summary = ""
+    for day in weather_data:
+        date = convert_date(day[0])
+        min_temp = convert_f_to_c(day[1])
+        max_temp = convert_f_to_c(day[2])
+        
+        #build the summary
+        summary += f"---- {date} ----\n"
+        summary += f"  Minimum Temperature: {format_temperature(min_temp)}\n"
+        summary += f"  Maximum Temperature: {format_temperature(max_temp)}\n"
+        summary += "\n"
+
+    return summary
+# #print(generate_daily_summary([
+#             ["2020-06-19T07:00:00+08:00", 47, 46],
+#             ["2020-06-20T07:00:00+08:00", 51, 67],
+#             ["2020-06-21T07:00:00+08:00", 58, 72],
+#             ["2020-06-22T07:00:00+08:00", 59, 71],
+#             ["2020-06-23T07:00:00+08:00", 52, 71],
+#             ["2020-06-24T07:00:00+08:00", 52, 67],
+#             ["2020-06-25T07:00:00+08:00", 48, 66],
+#             ["2020-06-26T07:00:00+08:00", 53, 66]
+#         ]))
