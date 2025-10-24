@@ -37,8 +37,7 @@ def convert_f_to_c(temp_in_fahrenheit):
     """
     celsius = (float(temp_in_fahrenheit) - 32) * 5 / 9
     return round(celsius,1)
-#example = "77"
-#convert_f_to_c(example)
+
 
 
 def calculate_mean(weather_data):
@@ -57,8 +56,6 @@ def calculate_mean(weather_data):
     # get mean
     mean = total/len(weather_data)
     return mean
-#weather_data = ["51", "58", "59", "52", "52", "48", "47", "53"]
-#print(f"The mean is {calculate_mean(weather_data)}")
 
 
 def load_data_from_csv(csv_file):
@@ -74,10 +71,6 @@ def load_data_from_csv(csv_file):
         reader = csv.reader(file)
         next(reader)
         for row in reader:
-            #if len (row) == 0 : 
-            # continue
-            #if not row: 
-            #   continue
             if row: 
                 row[1] = int(row[1])
                 row[2] = int(row[2])
@@ -95,24 +88,16 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    #find min in list
-    #assume first value is minimum
-    min = float(weather_data [0])
+    if not weather_data:
+        return ()
+    min_value = float(weather_data[0])
     min_position = 0
     for i, number in enumerate(weather_data):
         number = float(number)
-        #print (f"position{i} value{number}")
-        if (number <= min):
-            min = number
+        if (number <= min_value):
+            min_value = number
             min_position = i
-    return (min,min_position)
-        #print(min)
-    #return (min,)
-
-#my_list = ["49", "57", "56", "55", "53", "49"]
-#print (find_min(my_list))
-#print(f"The index of the last occurrence of the minimum value ({min(my_list)}) is: {last_min_index}")
-
+    return (min_value,min_position)
 
 def find_max(weather_data):
     """Calculates the maximum value in a list of numbers.
@@ -122,21 +107,19 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    max = float(weather_data [0])
+    if not weather_data:
+        return ()
+    max_value = float(weather_data[0])
     max_position = 0
     for i, number in enumerate(weather_data):
         number = float(number)
         #print (f"position{i} value{number}")
-        if (number >= max):
-            max = number
+        if (number >= max_value):
+            max_value = number
             max_position = i
-    return (max,max_position)
+    return (max_value,max_position)
         #print(min)
     #return (min,)
-
-#my_list = ["49", "57", "56", "55", "57", "49"]
-#print (find_max(my_list))
-
 
 def generate_summary(weather_data):
     """Outputs a summary for the given weather data.
@@ -146,14 +129,7 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    # min = float(weather_data [0])
-    # min_position = 0
-    # for i, number in enumerate(weather_data):
-    #     number = float(number)
-    #     if (number <= min):
-    #         min = number
-    #         min_position = i
-    # return (min,min_position)
+
 #find the number of days (x day overview)
     summary = f"{len(weather_data)} Day Overview\n"
 #find the min and max temps
@@ -191,8 +167,6 @@ def generate_daily_summary(weather_data):
         A string containing the summary information.
     """
     #find the min and max temps
-    #min_temps = [day[1] for day in weather_data]
-    #max_temps = [day[1] for day in weather_data]
     summary = ""
     for day in weather_data:
         date = convert_date(day[0])
@@ -206,13 +180,3 @@ def generate_daily_summary(weather_data):
         summary += "\n"
 
     return summary
-# #print(generate_daily_summary([
-#             ["2020-06-19T07:00:00+08:00", 47, 46],
-#             ["2020-06-20T07:00:00+08:00", 51, 67],
-#             ["2020-06-21T07:00:00+08:00", 58, 72],
-#             ["2020-06-22T07:00:00+08:00", 59, 71],
-#             ["2020-06-23T07:00:00+08:00", 52, 71],
-#             ["2020-06-24T07:00:00+08:00", 52, 67],
-#             ["2020-06-25T07:00:00+08:00", 48, 66],
-#             ["2020-06-26T07:00:00+08:00", 53, 66]
-#         ]))
